@@ -1,0 +1,41 @@
+package com.company;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Main {
+    public static void main(String[] args) {
+
+        String[] macAddressesArray = {
+                "aE:dC:cA:56:76:54",
+                "aE-dC-cA-56-76-54",
+                "01:23:45:67:89:Az",
+                "0123.4567.89AB",
+                "01-23-45-67-89-AH",
+                "01-23-45-67-AH"
+        };
+
+        String regex = "^([0-9A-Fa-f]{2}[:-]){5}"
+                +"([0-9A-Fa-f]{2})|"
+                +"([0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4})$";
+
+        try {
+            if (macAddressesArray.length <= 0) {
+                throw new ArithmeticException("МAC адреса не заполнены или не найдены");
+            }
+            else {
+                System.out.println("МAC адреса найдеены и готовы к валидации");
+            }
+            for(String address : macAddressesArray) {
+                Pattern pattern = Pattern.compile(regex);
+                Matcher matcher = pattern.matcher(address);
+
+                System.out.println(address + " result: " + matcher.matches());
+            }
+        } catch (Exception error) {
+            System.out.println("Что-то пошло не так на проверке валидности MAC адресов");
+        }  finally {
+            System.out.println("Блок проверки валидности MAC адресов завершился");
+        }
+
+    }
+}
